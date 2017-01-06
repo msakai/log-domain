@@ -38,7 +38,11 @@ import Data.Foldable as Foldable hiding (sum)
 import Data.Functor.Bind
 import Data.Functor.Extend
 import Data.Hashable
+#if MIN_VERSION_hashable(1,2,5)
+import Data.Hashable.Lifted
+#else
 import Data.Hashable.Extras
+#endif
 import Data.Int
 import Data.List as List hiding (sum)
 #if __GLASGOW_HASKELL__ < 710
@@ -70,7 +74,7 @@ import Text.Show as T
 -- >>> let Exp x ~= Exp y = abs ((exp x-exp y) / exp x) < 0.01
 
 -- | @Log@-domain @Float@ and @Double@ values.
-newtype Log a = Exp { ln :: a } deriving (Eq,Ord,Data,Typeable,Generic)
+newtype Log a = Exp { ln :: a } deriving (Eq,Ord,Data,Typeable,Generic,Generic1)
 
 --deriveSafeCopy 1 'base ''Log
 
